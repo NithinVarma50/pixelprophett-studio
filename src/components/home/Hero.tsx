@@ -61,11 +61,7 @@ const Hero = () => {
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
-              <Link to="/work">
-                <Button variant="heroOutline" size="lg">
-                  View Work
-                </Button>
-              </Link>
+
             </motion.div>
 
             {/* Services tags */}
@@ -95,10 +91,10 @@ const Hero = () => {
           >
             <StackedImageHover
               images={[
-                "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1558655146-d09347e0b7a8?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80"
+                "https://upload.wikimedia.org/wikipedia/commons/7/7b/Obverse_of_the_series_2009_%24100_Federal_Reserve_Note.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/7/7b/Obverse_of_the_series_2009_%24100_Federal_Reserve_Note.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/7/7b/Obverse_of_the_series_2009_%24100_Federal_Reserve_Note.jpg",
+                "https://upload.wikimedia.org/wikipedia/commons/7/7b/Obverse_of_the_series_2009_%24100_Federal_Reserve_Note.jpg"
               ]}
               width={500}
               height={350}
