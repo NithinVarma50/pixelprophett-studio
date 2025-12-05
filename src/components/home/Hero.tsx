@@ -90,7 +90,7 @@ const Hero = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.4 }}
-            className="hidden lg:block relative"
+            className="relative mt-12 lg:mt-0 scale-50 sm:scale-75 lg:scale-100 origin-center lg:origin-left"
           >
             <StackedImageHover
               images={[
