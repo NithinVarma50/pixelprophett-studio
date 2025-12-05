@@ -90,10 +90,10 @@ const Hero = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.4 }}
-            className="relative mt-12 lg:mt-0 w-full flex justify-center lg:block origin-center lg:origin-left"
+            className="relative mt-20 lg:mt-0 w-full flex justify-center lg:block origin-center lg:origin-left"
           >
             <StackedImageHover
-              className="!w-[300px] !h-[150px] sm:!w-[500px] sm:!h-[220px] lg:!w-[640px] lg:!h-[260px]"
+              className="!w-[250px] !h-[120px] sm:!w-[500px] sm:!h-[220px] lg:!w-[640px] lg:!h-[260px]"
               images={[
                 "https://upload.wikimedia.org/wikipedia/commons/7/7b/Obverse_of_the_series_2009_%24100_Federal_Reserve_Note.jpg",
                 "https://upload.wikimedia.org/wikipedia/commons/7/7b/Obverse_of_the_series_2009_%24100_Federal_Reserve_Note.jpg",

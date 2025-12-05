@@ -95,7 +95,7 @@ export default function StackedImageHover({
             {/* Scoped CSS: hover rules apply to direct children only */}
             <style>{`
         .${uniqueClass} {
-          margin-top: 10rem; /* like your demo */
+          /* margin-top removed to allow parent control */
         }
         .${uniqueClass} > .stack-item {
           opacity: 1;
