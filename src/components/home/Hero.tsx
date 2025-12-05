@@ -7,7 +7,7 @@ import { ScrollingHeroMarquee } from "@/components/ui/scrolling-hero-marquee";
 
 const Hero = () => {
   return (
-    <section className="min-h-[85vh] flex items-center relative overflow-hidden">
+    <section className="min-h-[85vh] flex items-center relative">
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-muted/20 via-transparent to-transparent" />
 
@@ -93,7 +93,7 @@ const Hero = () => {
             className="relative mt-20 lg:mt-0 w-full flex justify-center lg:block origin-center lg:origin-left"
           >
             <StackedImageHover
-              className="!w-[250px] !h-[120px] sm:!w-[500px] sm:!h-[220px] lg:!w-[640px] lg:!h-[260px]"
+              className="!w-[280px] !h-[115px] sm:!w-[500px] sm:!h-[220px] lg:!w-[640px] lg:!h-[260px]"
               images={[
                 "https://upload.wikimedia.org/wikipedia/commons/7/7b/Obverse_of_the_series_2009_%24100_Federal_Reserve_Note.jpg",
                 "https://upload.wikimedia.org/wikipedia/commons/7/7b/Obverse_of_the_series_2009_%24100_Federal_Reserve_Note.jpg",
