@@ -1,5 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import { motion } from "framer-motion";
+import { Linkedin, Globe } from "lucide-react";
 
 const About = () => {
   return (
@@ -67,8 +68,8 @@ const About = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="p-8 rounded-2xl border border-border/40 bg-card/30"
             >
-              <div className="w-12 h-12 rounded-full bg-foreground text-background flex items-center justify-center font-heading font-bold mb-6">
-                N
+              <div className="w-16 h-16 rounded-full overflow-hidden mb-6 border border-border/50">
+                <img src="/nithin.webp" alt="Nithin" className="w-full h-full object-cover" />
               </div>
               <h3 className="font-heading text-xl font-medium mb-2">Nithin</h3>
               <p className="text-sm text-muted-foreground mb-6">Web Development & Automation</p>
@@ -76,6 +77,24 @@ const About = () => {
                 Builds websites and workflow systems that save hours of manual work.
                 Specializes in clean, modern interfaces and automation setups.
               </p>
+              <div className="flex gap-4">
+                <a
+                  href="https://www.linkedin.com/in/nithin-varma-801227318?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Linkedin className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://pixelprophett-portfolio.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Globe className="w-5 h-5" />
+                </a>
+              </div>
 
             </motion.div>
 
@@ -87,8 +106,8 @@ const About = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="p-8 rounded-2xl border border-border/40 bg-card/30"
             >
-              <div className="w-12 h-12 rounded-full bg-foreground text-background flex items-center justify-center font-heading font-bold mb-6">
-                K
+              <div className="w-16 h-16 rounded-full overflow-hidden mb-6 border border-border/50">
+                <img src="/koushik.jpg" alt="Koushik" className="w-full h-full object-cover" />
               </div>
               <h3 className="font-heading text-xl font-medium mb-2">Koushik</h3>
               <p className="text-sm text-muted-foreground mb-6">Video Editing & Graphic Design</p>
@@ -96,6 +115,16 @@ const About = () => {
                 Creates modern and aesthetic content that enhances your brand presence.
                 From reels to posters, delivers premium quality.
               </p>
+              <div className="flex gap-4">
+                <a
+                  href="https://www.linkedin.com/in/koushik-aila-32a621385?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Linkedin className="w-5 h-5" />
+                </a>
+              </div>
 
             </motion.div>
           </div>
