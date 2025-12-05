@@ -8,7 +8,7 @@ const navLinks = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
   { name: "Services", path: "/services" },
-  { name: "Work", path: "/work" },
+
   { name: "Contact", path: "/contact" },
 ];
 
@@ -36,11 +36,10 @@ const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-4 py-2 rounded-full text-sm transition-colors ${
-                  location.pathname === link.path
+                className={`px-4 py-2 rounded-full text-sm transition-colors ${location.pathname === link.path
                     ? "text-foreground bg-muted"
                     : "text-muted-foreground hover:text-foreground"
-                }`}
+                  }`}
               >
                 {link.name}
               </Link>
@@ -81,11 +80,10 @@ const Navbar = () => {
                     key={link.path}
                     to={link.path}
                     onClick={() => setIsOpen(false)}
-                    className={`block px-4 py-3 rounded-lg text-sm transition-colors ${
-                      location.pathname === link.path
+                    className={`block px-4 py-3 rounded-lg text-sm transition-colors ${location.pathname === link.path
                         ? "bg-muted text-foreground"
                         : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                    }`}
+                      }`}
                   >
                     {link.name}
                   </Link>
