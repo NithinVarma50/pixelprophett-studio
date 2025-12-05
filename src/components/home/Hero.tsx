@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StackedImageHover } from "@/components/ui/hover-deck-fx";
 import { ScrollingHeroMarquee } from "@/components/ui/scrolling-hero-marquee";
+import AnimatedTextCycle from "@/components/ui/animated-text-cycle";
 
 const Hero = () => {
   return (
@@ -82,6 +83,28 @@ const Hero = () => {
                   {service}
                 </span>
               ))}
+            </motion.div>
+
+            {/* Animated Text Cycle */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="mt-8"
+            >
+              <h1 className="text-xl lg:text-3xl font-light text-left text-muted-foreground">
+                Your <AnimatedTextCycle
+                  words={[
+                    "Presence",
+                    "Workflow",
+                    "Data",
+                    "Content",
+                    "Brand"
+                  ]}
+                  interval={3000}
+                  className={"text-foreground font-semibold"}
+                /> deserves better tools
+              </h1>
             </motion.div>
           </div>
 
