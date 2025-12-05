@@ -1,242 +1,125 @@
 import Layout from "@/components/layout/Layout";
 import { motion } from "framer-motion";
-import { Monitor, Cog, Database, Video, Palette, ExternalLink } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 
-const categories = [
-  { id: "all", name: "All Work", icon: null },
-  { id: "websites", name: "Websites", icon: Monitor },
-  { id: "automation", name: "Automation", icon: Cog },
-  { id: "scraping", name: "Data Scraping", icon: Database },
-  { id: "video", name: "Video Editing", icon: Video },
-  { id: "design", name: "Graphic Design", icon: Palette },
-];
+const categories = ["All", "Web", "Automation", "Data", "Video", "Design"];
 
 const projects = [
-  {
-    id: 1,
-    category: "websites",
-    title: "Portfolio Website",
-    description: "Clean single-page portfolio for a freelance photographer",
-    tools: ["React", "Tailwind", "Framer Motion"],
-    color: "primary",
-  },
-  {
-    id: 2,
-    category: "websites",
-    title: "E-commerce Landing",
-    description: "High-converting landing page for a fashion brand",
-    tools: ["Next.js", "Stripe", "Supabase"],
-    color: "primary",
-  },
-  {
-    id: 3,
-    category: "automation",
-    title: "Lead Nurturing System",
-    description: "Automated email sequences based on user behavior",
-    tools: ["n8n", "Gmail", "Google Sheets"],
-    color: "accent",
-  },
-  {
-    id: 4,
-    category: "automation",
-    title: "Social Media Scheduler",
-    description: "Content scheduling workflow with AI caption generation",
-    tools: ["Make.com", "OpenAI", "Buffer"],
-    color: "accent",
-  },
-  {
-    id: 5,
-    category: "scraping",
-    title: "Restaurant Database",
-    description: "5000+ restaurant listings from Bangalore with contact info",
-    tools: ["Python", "Selenium", "Excel"],
-    color: "secondary",
-  },
-  {
-    id: 6,
-    category: "scraping",
-    title: "Agency Lead List",
-    description: "Marketing agency data from top 10 Indian cities",
-    tools: ["Node.js", "Puppeteer", "CSV"],
-    color: "secondary",
-  },
-  {
-    id: 7,
-    category: "video",
-    title: "Product Launch Reel",
-    description: "30-second promotional reel for a tech startup",
-    tools: ["Premiere Pro", "After Effects"],
-    color: "secondary",
-  },
-  {
-    id: 8,
-    category: "video",
-    title: "Podcast Episode",
-    description: "Full podcast edit with intro, transitions, and captions",
-    tools: ["DaVinci Resolve", "Audition"],
-    color: "secondary",
-  },
-  {
-    id: 9,
-    category: "design",
-    title: "Event Poster Series",
-    description: "10 posters for a music festival campaign",
-    tools: ["Photoshop", "Illustrator"],
-    color: "accent",
-  },
-  {
-    id: 10,
-    category: "design",
-    title: "Brand Identity Kit",
-    description: "Logo, business cards, and social templates",
-    tools: ["Figma", "Illustrator"],
-    color: "accent",
-  },
+  { id: 1, category: "Web", title: "Portfolio Website", desc: "Single-page portfolio for a photographer", tools: ["React", "Tailwind"] },
+  { id: 2, category: "Web", title: "E-commerce Landing", desc: "High-converting landing page", tools: ["Next.js", "Stripe"] },
+  { id: 3, category: "Automation", title: "Lead Nurturing", desc: "Automated email sequences", tools: ["n8n", "Gmail"] },
+  { id: 4, category: "Automation", title: "Social Scheduler", desc: "Content scheduling with AI captions", tools: ["Make.com", "OpenAI"] },
+  { id: 5, category: "Data", title: "Restaurant Database", desc: "5000+ listings from Bangalore", tools: ["Python", "Excel"] },
+  { id: 6, category: "Data", title: "Agency Lead List", desc: "Marketing agencies from top 10 cities", tools: ["Node.js", "CSV"] },
+  { id: 7, category: "Video", title: "Product Reel", desc: "30-second promo for tech startup", tools: ["Premiere Pro"] },
+  { id: 8, category: "Video", title: "Podcast Edit", desc: "Full episode with transitions", tools: ["DaVinci Resolve"] },
+  { id: 9, category: "Design", title: "Event Posters", desc: "Series for music festival", tools: ["Photoshop"] },
+  { id: 10, category: "Design", title: "Brand Identity", desc: "Logo and templates", tools: ["Figma"] },
 ];
 
 const Work = () => {
-  const [activeCategory, setActiveCategory] = useState("all");
-
-  const filteredProjects =
-    activeCategory === "all"
-      ? projects
-      : projects.filter((p) => p.category === activeCategory);
+  const [active, setActive] = useState("All");
+  const filtered = active === "All" ? projects : projects.filter((p) => p.category === active);
 
   return (
     <Layout>
       {/* Hero */}
-      <section className="py-20 lg:py-32 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="section-padding">
+        <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="max-w-3xl mx-auto text-center"
+            className="max-w-2xl"
           >
-            <h1 className="font-heading text-4xl lg:text-5xl xl:text-6xl font-bold mb-6">
-              Our <span className="gradient-text">Work</span>
+            <span className="text-xs text-muted-foreground uppercase tracking-wider">Work</span>
+            <h1 className="font-heading text-4xl lg:text-5xl font-semibold mt-4 mb-6">
+              Selected projects
             </h1>
-            <p className="text-lg lg:text-xl text-muted-foreground">
-              A showcase of projects we've delivered across web development, automation, 
-              data services, video editing, and graphic design.
+            <p className="text-lg text-muted-foreground">
+              A showcase of work across web, automation, data, video, and design.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Filter */}
-      <section className="py-8 sticky top-16 lg:top-20 z-40 bg-background/80 backdrop-blur-xl border-b border-border/50">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-2 lg:gap-3">
+      <section className="sticky top-16 z-40 bg-background/60 backdrop-blur-xl border-y border-border/40">
+        <div className="container mx-auto py-4">
+          <div className="flex flex-wrap gap-2">
             {categories.map((cat) => (
               <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  activeCategory === cat.id
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
+                key={cat}
+                onClick={() => setActive(cat)}
+                className={`px-4 py-2 rounded-full text-sm transition-colors ${
+                  active === cat
+                    ? "bg-foreground text-background"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                {cat.icon && <cat.icon size={16} />}
-                {cat.name}
+                {cat}
               </button>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Projects Grid */}
-      <section className="py-16 lg:py-24">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            layout
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {filteredProjects.map((project, index) => (
+      {/* Projects */}
+      <section className="py-16">
+        <div className="container mx-auto">
+          <motion.div layout className="grid md:grid-cols-2 gap-6">
+            {filtered.map((project, index) => (
               <motion.div
                 key={project.id}
                 layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="group glass-card overflow-hidden hover:border-primary/50 transition-all duration-300"
+                className="group p-6 rounded-2xl border border-border/40 bg-card/30 hover:border-border/80 transition-colors"
               >
-                {/* Placeholder Image */}
-                <div
-                  className={`aspect-video relative ${
-                    project.color === "primary"
-                      ? "bg-gradient-to-br from-primary/20 to-cyan-light/10"
-                      : project.color === "secondary"
-                      ? "bg-gradient-to-br from-secondary/20 to-coral-light/10"
-                      : "bg-gradient-to-br from-accent/20 to-accent/10"
-                  }`}
-                >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="font-heading text-4xl font-bold opacity-20">
-                      {project.title.charAt(0)}
-                    </span>
-                  </div>
+                <div className="flex items-start justify-between mb-4">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wider">
+                    {project.category}
+                  </span>
+                  <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                 </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <div className="flex items-start justify-between gap-4 mb-3">
-                    <h3 className="font-heading text-lg font-semibold group-hover:text-primary transition-colors">
-                      {project.title}
-                    </h3>
-                    <span className="text-xs px-2 py-1 rounded-full bg-muted text-muted-foreground capitalize">
-                      {project.category}
+                <h3 className="font-heading text-lg font-medium mb-2">{project.title}</h3>
+                <p className="text-sm text-muted-foreground mb-4">{project.desc}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.tools.map((tool) => (
+                    <span key={tool} className="text-xs px-2 py-1 rounded-full bg-muted text-muted-foreground">
+                      {tool}
                     </span>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tools.map((tool) => (
-                      <span
-                        key={tool}
-                        className="text-xs px-2 py-1 rounded bg-muted/50 text-muted-foreground"
-                      >
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
+                  ))}
                 </div>
               </motion.div>
             ))}
           </motion.div>
-
-          {filteredProjects.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No projects in this category yet.</p>
-            </div>
-          )}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-20 lg:py-32 bg-gradient-to-b from-transparent via-muted/20 to-transparent">
-        <div className="container mx-auto px-4 lg:px-8 text-center">
+      <section className="section-padding border-t border-border/40">
+        <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            className="max-w-xl"
           >
-            <h2 className="font-heading text-3xl lg:text-4xl font-bold mb-4">
-              Want Your Project <span className="gradient-text-secondary">Here</span>?
+            <h2 className="font-heading text-3xl font-semibold mb-4">
+              Want your project here?
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-              Let's create something amazing together.
+            <p className="text-muted-foreground mb-8">
+              Let's create something together.
             </p>
             <Link to="/contact">
-              <Button variant="hero" size="xl">
-                Start Your Project
+              <Button variant="hero" size="lg">
+                Start a Project
+                <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
           </motion.div>

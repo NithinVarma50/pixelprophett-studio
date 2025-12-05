@@ -17,38 +17,32 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
-      <nav className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-xl border-b border-border/40">
+      <nav className="container mx-auto">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-              <span className="text-primary-foreground font-heading font-bold text-lg">P</span>
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center">
+              <span className="text-background font-heading font-bold text-sm">P</span>
             </div>
-            <span className="font-heading font-semibold text-lg hidden sm:block group-hover:text-primary transition-colors">
-              Pixelprophett Labs
+            <span className="font-heading font-medium text-sm hidden sm:block">
+              Pixelprophett
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`font-medium text-sm transition-colors relative ${
+                className={`px-4 py-2 rounded-full text-sm transition-colors ${
                   location.pathname === link.path
-                    ? "text-primary"
+                    ? "text-foreground bg-muted"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {link.name}
-                {location.pathname === link.path && (
-                  <motion.div
-                    layoutId="activeNav"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
-                  />
-                )}
               </Link>
             ))}
           </div>
@@ -56,8 +50,8 @@ const Navbar = () => {
           {/* CTA Button */}
           <div className="hidden lg:block">
             <Link to="/contact">
-              <Button variant="hero" size="default">
-                Start a Project
+              <Button variant="hero" size="sm">
+                Get a Quote
               </Button>
             </Link>
           </div>
@@ -68,7 +62,7 @@ const Navbar = () => {
             className="lg:hidden p-2 text-foreground"
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
 
@@ -79,17 +73,17 @@ const Navbar = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden overflow-hidden"
+              className="lg:hidden overflow-hidden border-t border-border/40"
             >
-              <div className="py-4 space-y-2">
+              <div className="py-4 space-y-1">
                 {navLinks.map((link) => (
                   <Link
                     key={link.path}
                     to={link.path}
                     onClick={() => setIsOpen(false)}
-                    className={`block px-4 py-3 rounded-lg font-medium transition-colors ${
+                    className={`block px-4 py-3 rounded-lg text-sm transition-colors ${
                       location.pathname === link.path
-                        ? "bg-primary/10 text-primary"
+                        ? "bg-muted text-foreground"
                         : "text-muted-foreground hover:bg-muted hover:text-foreground"
                     }`}
                   >
@@ -99,7 +93,7 @@ const Navbar = () => {
                 <div className="pt-4 px-4">
                   <Link to="/contact" onClick={() => setIsOpen(false)}>
                     <Button variant="hero" className="w-full">
-                      Start a Project
+                      Get a Quote
                     </Button>
                   </Link>
                 </div>

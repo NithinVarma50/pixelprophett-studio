@@ -1,164 +1,132 @@
 import Layout from "@/components/layout/Layout";
 import { motion } from "framer-motion";
-import { Code, Video, Palette, Cog } from "lucide-react";
 
 const About = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-20 lg:py-32 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <section className="section-padding">
+        <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="max-w-3xl mx-auto text-center"
+            className="max-w-2xl"
           >
-            <h1 className="font-heading text-4xl lg:text-5xl xl:text-6xl font-bold mb-6">
-              Who <span className="gradient-text">We Are</span>
+            <span className="text-xs text-muted-foreground uppercase tracking-wider">About</span>
+            <h1 className="font-heading text-4xl lg:text-5xl font-semibold mt-4 mb-6">
+              A compact digital studio
             </h1>
-            <p className="text-lg lg:text-xl text-muted-foreground">
-              Pixelprophett Labs is a compact digital studio providing end-to-end digital presence — 
-              your identity, systems, and content. We turn ideas into systems and systems into screens.
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Pixelprophett Labs provides end-to-end digital presence — your identity, 
+              systems, and content. We turn ideas into systems and systems into screens.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Team Section */}
-      <section className="py-20 lg:py-32 bg-gradient-to-b from-transparent via-muted/30 to-transparent">
-        <div className="container mx-auto px-4 lg:px-8">
+      <section className="section-padding border-t border-border/40">
+        <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-16"
+            className="mb-12"
           >
-            <h2 className="font-heading text-3xl lg:text-4xl font-bold mb-4">
-              Meet the <span className="gradient-text-secondary">Team</span>
+            <span className="text-xs text-muted-foreground uppercase tracking-wider">Team</span>
+            <h2 className="font-heading text-3xl font-semibold mt-4">
+              Meet us
             </h2>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
             {/* Nithin */}
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="glass-card p-8 lg:p-10"
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="p-8 rounded-2xl border border-border/40 bg-card/30"
             >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-cyan-light flex items-center justify-center">
-                  <Code className="w-8 h-8 text-primary-foreground" />
-                </div>
-                <div>
-                  <h3 className="font-heading text-2xl font-bold">Nithin</h3>
-                  <p className="text-muted-foreground">Web Developer & Automation</p>
-                </div>
+              <div className="w-12 h-12 rounded-full bg-foreground text-background flex items-center justify-center font-heading font-bold mb-6">
+                N
               </div>
+              <h3 className="font-heading text-xl font-medium mb-2">Nithin</h3>
+              <p className="text-sm text-muted-foreground mb-6">Web Development & Automation</p>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                Builds websites & workflow systems that save hours of manual work. 
-                Specializes in clean, modern interfaces and automation setups that actually work.
+                Builds websites and workflow systems that save hours of manual work. 
+                Specializes in clean, modern interfaces and automation setups.
               </p>
               <div className="flex flex-wrap gap-2">
-                <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">
-                  React
-                </span>
-                <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">
-                  n8n
-                </span>
-                <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">
-                  Make.com
-                </span>
-                <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">
-                  APIs
-                </span>
+                {["React", "n8n", "Make.com", "APIs"].map((skill) => (
+                  <span key={skill} className="px-3 py-1 text-xs rounded-full bg-muted text-muted-foreground">
+                    {skill}
+                  </span>
+                ))}
               </div>
             </motion.div>
 
             {/* Koushik */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="glass-card p-8 lg:p-10"
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="p-8 rounded-2xl border border-border/40 bg-card/30"
             >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-secondary to-coral-light flex items-center justify-center">
-                  <Video className="w-8 h-8 text-secondary-foreground" />
-                </div>
-                <div>
-                  <h3 className="font-heading text-2xl font-bold">Koushik</h3>
-                  <p className="text-muted-foreground">Video Editing & Graphic Design</p>
-                </div>
+              <div className="w-12 h-12 rounded-full bg-foreground text-background flex items-center justify-center font-heading font-bold mb-6">
+                K
               </div>
+              <h3 className="font-heading text-xl font-medium mb-2">Koushik</h3>
+              <p className="text-sm text-muted-foreground mb-6">Video Editing & Graphic Design</p>
               <p className="text-muted-foreground leading-relaxed mb-6">
                 Creates modern and aesthetic content that enhances your brand presence. 
-                From reels to posters, delivers premium quality that makes you stand out.
+                From reels to posters, delivers premium quality.
               </p>
               <div className="flex flex-wrap gap-2">
-                <span className="px-3 py-1 rounded-full bg-secondary/10 text-secondary text-sm">
-                  Premiere Pro
-                </span>
-                <span className="px-3 py-1 rounded-full bg-secondary/10 text-secondary text-sm">
-                  After Effects
-                </span>
-                <span className="px-3 py-1 rounded-full bg-secondary/10 text-secondary text-sm">
-                  Photoshop
-                </span>
-                <span className="px-3 py-1 rounded-full bg-secondary/10 text-secondary text-sm">
-                  Figma
-                </span>
+                {["Premiere Pro", "After Effects", "Photoshop", "Figma"].map((skill) => (
+                  <span key={skill} className="px-3 py-1 text-xs rounded-full bg-muted text-muted-foreground">
+                    {skill}
+                  </span>
+                ))}
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* What Sets Us Apart */}
-      <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 lg:px-8">
+      {/* Values */}
+      <section className="section-padding border-t border-border/40">
+        <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-16"
+            className="mb-12"
           >
-            <h2 className="font-heading text-3xl lg:text-4xl font-bold">
-              What Sets Us <span className="gradient-text">Apart</span>
+            <span className="text-xs text-muted-foreground uppercase tracking-wider">Values</span>
+            <h2 className="font-heading text-3xl font-semibold mt-4">
+              What sets us apart
             </h2>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8">
             {[
-              {
-                title: "Personal Touch",
-                description: "Direct communication with the people actually doing the work.",
-              },
-              {
-                title: "No Middlemen",
-                description: "Efficient pricing without agency overheads.",
-              },
-              {
-                title: "Full-Stack Team",
-                description: "Code, design, video, automation — all under one roof.",
-              },
+              { title: "Personal Touch", desc: "Direct communication with the people doing the work." },
+              { title: "No Middlemen", desc: "Efficient pricing without agency overheads." },
+              { title: "Full-Stack Team", desc: "Code, design, video, automation — all in one place." },
             ].map((item, index) => (
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center p-6"
+                transition={{ duration: 0.4, delay: index * 0.1 }}
               >
-                <h3 className="font-heading text-xl font-semibold mb-3">{item.title}</h3>
-                <p className="text-muted-foreground">{item.description}</p>
+                <h3 className="font-heading font-medium mb-2">{item.title}</h3>
+                <p className="text-sm text-muted-foreground">{item.desc}</p>
               </motion.div>
             ))}
           </div>
