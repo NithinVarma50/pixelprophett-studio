@@ -6,7 +6,7 @@ import { StackedImageHover } from "@/components/ui/hover-deck-fx";
 
 const Hero = () => {
   return (
-    <section className="min-h-[85vh] flex items-center relative overflow-hidden">
+    <section className="min-h-[85vh] flex items-center relative">
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-muted/20 via-transparent to-transparent" />
 
@@ -96,10 +96,6 @@ const Hero = () => {
                 "https://upload.wikimedia.org/wikipedia/commons/7/7b/Obverse_of_the_series_2009_%24100_Federal_Reserve_Note.jpg",
                 "https://upload.wikimedia.org/wikipedia/commons/7/7b/Obverse_of_the_series_2009_%24100_Federal_Reserve_Note.jpg"
               ]}
-              width={500}
-              height={350}
-              rotateDeg={-5}
-              skewDeg={5}
             />
           </motion.div>
         </div>

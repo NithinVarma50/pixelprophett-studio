@@ -39,10 +39,10 @@ export default function StackedImageHover({
     images,
     width = 640,
     height = 260,
-    backgroundColor = 'transparent',
-    rotateDeg = -10,
-    skewDeg = 10,
-    scale = 0.8,
+    backgroundColor = '#000',
+    rotateDeg = -30,
+    skewDeg = 25,
+    scale = 0.6,
     stepPx = 40,
     minOpacity = 0.4,
     ariaLabel = 'stacked image hover effect',
@@ -81,7 +81,7 @@ export default function StackedImageHover({
             {images.map((src, i) => (
                 <div
                     key={i}
-                    className="stack-item absolute inset-0 will-change-transform transition-transform duration-500 shadow-2xl rounded-xl overflow-hidden border border-white/10"
+                    className="stack-item absolute inset-0 will-change-transform transition-transform duration-500"
                     style={{ zIndex: i }}
                 >
                     <img
@@ -95,7 +95,7 @@ export default function StackedImageHover({
             {/* Scoped CSS: hover rules apply to direct children only */}
             <style>{`
         .${uniqueClass} {
-          /* margin-top: 10rem; removed fixed margin to let parent control layout */
+          margin-top: 10rem; /* like your demo */
         }
         .${uniqueClass} > .stack-item {
           opacity: 1;
