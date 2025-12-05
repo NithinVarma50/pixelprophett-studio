@@ -65,7 +65,7 @@ const ServicesOverview = () => {
             >
               <Link
                 to={service.link}
-                className="group flex items-start justify-between py-8 border-t border-border/40 hover:bg-muted/30 -mx-6 px-6 transition-colors"
+                className="group flex items-start justify-between py-8 border-t border-border/40 hover:bg-muted/30 -mx-2 px-2 sm:-mx-6 sm:px-6 transition-colors"
               >
                 <div className="flex items-start gap-8">
                   <span className="text-xs text-muted-foreground font-mono pt-1">
