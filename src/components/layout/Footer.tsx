@@ -8,9 +8,10 @@ const Footer = () => {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center">
-                <span className="text-background font-heading font-bold text-sm">P</span>
+              <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center">
+                <img src="/pxplabs-logo.jpg" alt="PXPLabs Logo" className="w-full h-full object-cover" />
               </div>
+              <span className="font-heading font-medium text-sm">PXPLabs</span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Ideas → Systems → Screens
@@ -73,7 +74,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="mt-16 pt-8 border-t border-border/40 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Pixelprophett Labs
+            © {new Date().getFullYear()} PXPLabs
           </p>
           <p className="text-xs text-muted-foreground">
             Nithin & Koushik

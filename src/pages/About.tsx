@@ -18,7 +18,7 @@ const About = () => {
               A compact digital studio
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Pixelprophett Labs provides end-to-end digital presence — your identity, 
+              PXPLabs provides end-to-end digital presence — your identity,
               systems, and content. We turn ideas into systems and systems into screens.
             </p>
           </motion.div>
@@ -56,7 +56,7 @@ const About = () => {
               <h3 className="font-heading text-xl font-medium mb-2">Nithin</h3>
               <p className="text-sm text-muted-foreground mb-6">Web Development & Automation</p>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                Builds websites and workflow systems that save hours of manual work. 
+                Builds websites and workflow systems that save hours of manual work.
                 Specializes in clean, modern interfaces and automation setups.
               </p>
               <div className="flex flex-wrap gap-2">
@@ -82,7 +82,7 @@ const About = () => {
               <h3 className="font-heading text-xl font-medium mb-2">Koushik</h3>
               <p className="text-sm text-muted-foreground mb-6">Video Editing & Graphic Design</p>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                Creates modern and aesthetic content that enhances your brand presence. 
+                Creates modern and aesthetic content that enhances your brand presence.
                 From reels to posters, delivers premium quality.
               </p>
               <div className="flex flex-wrap gap-2">

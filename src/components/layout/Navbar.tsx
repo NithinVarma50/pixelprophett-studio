@@ -22,11 +22,11 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center">
-              <span className="text-background font-heading font-bold text-sm">P</span>
+            <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center">
+              <img src="/pxplabs-logo.jpg" alt="PXPLabs Logo" className="w-full h-full object-cover" />
             </div>
             <span className="font-heading font-medium text-sm hidden sm:block">
-              Pixelprophett
+              PXPLabs
             </span>
           </Link>
 
@@ -37,8 +37,8 @@ const Navbar = () => {
                 key={link.path}
                 to={link.path}
                 className={`px-4 py-2 rounded-full text-sm transition-colors ${location.pathname === link.path
-                    ? "text-foreground bg-muted"
-                    : "text-muted-foreground hover:text-foreground"
+                  ? "text-foreground bg-muted"
+                  : "text-muted-foreground hover:text-foreground"
                   }`}
               >
                 {link.name}
@@ -81,8 +81,8 @@ const Navbar = () => {
                     to={link.path}
                     onClick={() => setIsOpen(false)}
                     className={`block px-4 py-3 rounded-lg text-sm transition-colors ${location.pathname === link.path
-                        ? "bg-muted text-foreground"
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
                       }`}
                   >
                     {link.name}

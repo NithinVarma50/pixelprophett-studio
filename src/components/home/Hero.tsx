@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StackedImageHover } from "@/components/ui/hover-deck-fx";
+import { ScrollingHeroMarquee } from "@/components/ui/scrolling-hero-marquee";
 
 const Hero = () => {
   return (
@@ -27,15 +28,17 @@ const Hero = () => {
             </motion.div>
 
             {/* Headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="font-heading text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.1] mb-6"
-            >
-              We build websites, automations, and content that{" "}
-              <span className="text-muted-foreground">actually work.</span>
-            </motion.h1>
+            {/* Headline */}
+            <div className="mb-6 -ml-4">
+              <ScrollingHeroMarquee
+                text="We build websites, automations, and content that actually work."
+                fontSize="clamp(2rem, 4vw, 3.75rem)"
+                rowHeight={80}
+                durationSec={20}
+                bottomRotateXDeg={-10}
+                bottomSkewXDeg={10}
+              />
+            </div>
 
             {/* Subline */}
             <motion.p
