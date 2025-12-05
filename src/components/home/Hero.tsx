@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -6,7 +7,68 @@ import { StackedImageHover } from "@/components/ui/hover-deck-fx";
 import { ScrollingHeroMarquee } from "@/components/ui/scrolling-hero-marquee";
 import AnimatedTextCycle from "@/components/ui/animated-text-cycle";
 
+const slogans = [
+  {
+    prefix: "Your",
+    words: ["Presence", "Brand", "Idea"],
+    suffix: "deserves expert solutions"
+  },
+  {
+    prefix: "Transform your",
+    words: ["Workflow", "Business", "Future"],
+    suffix: "with smart automation"
+  },
+  {
+    prefix: "Crafting",
+    words: ["Digital Experiences", "Websites", "User Flows"],
+    suffix: "that convert"
+  },
+  {
+    prefix: "Empowering",
+    words: ["Creators", "Startups", "Agencies"],
+    suffix: "with modern tech"
+  },
+  {
+    prefix: "",
+    words: ["Design", "Strategy", "Execution"],
+    suffix: "that sets you apart"
+  },
+  {
+    prefix: "Turn",
+    words: ["Data", "Insights", "Analytics"],
+    suffix: "into actionable growth"
+  },
+  {
+    prefix: "",
+    words: ["Video", "Content", "Storytelling"],
+    suffix: "that captures attention"
+  },
+  {
+    prefix: "Building",
+    words: ["Trust", "Authority", "Influence"],
+    suffix: "through premium design"
+  },
+  {
+    prefix: "",
+    words: ["Seamless", "Fast", "Scalable"],
+    suffix: "solutions for your business"
+  },
+  {
+    prefix: "Your",
+    words: ["Vision", "Goal", "Project"],
+    suffix: "realized with precision"
+  }
+];
+
 const Hero = () => {
+  const [currentSlogan, setCurrentSlogan] = useState(slogans[0]);
+
+  useEffect(() => {
+    // Randomly select a slogan on mount
+    const randomIndex = Math.floor(Math.random() * slogans.length);
+    setCurrentSlogan(slogans[randomIndex]);
+  }, []);
+
   return (
     <section className="min-h-[85vh] flex items-center relative">
       {/* Subtle gradient background */}
@@ -93,17 +155,11 @@ const Hero = () => {
               className="mt-8"
             >
               <h1 className="text-xl lg:text-3xl font-light text-left text-muted-foreground">
-                Your <AnimatedTextCycle
-                  words={[
-                    "Presence",
-                    "Workflow",
-                    "Data",
-                    "Content",
-                    "Brand"
-                  ]}
+                {currentSlogan.prefix} <AnimatedTextCycle
+                  words={currentSlogan.words}
                   interval={3000}
                   className={"text-foreground font-semibold"}
-                /> deserves better tools
+                /> {currentSlogan.suffix}
               </h1>
             </motion.div>
           </div>
