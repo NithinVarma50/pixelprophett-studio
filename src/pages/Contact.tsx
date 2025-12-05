@@ -14,7 +14,7 @@ const serviceOptions = [
   { id: "scraping", label: "Data Scraping", basePrice: 2000 },
   { id: "portfolio", label: "Portfolio", basePrice: 4000 },
   { id: "automation", label: "Automation", basePrice: 5000 },
-  { id: "website", label: "Website", basePrice: 8000 },
+  { id: "website", label: "Website", basePrice: 6000 },
 ];
 
 const Contact = () => {
@@ -215,6 +215,9 @@ Details: ${formData.details || "Not provided"}`;
                     </label>
                   ))}
                 </div>
+                <p className="text-xs text-muted-foreground mt-3 font-light">
+                  * Negotiable: We can discuss the price after booking
+                </p>
               </div>
 
               {/* Details */}
