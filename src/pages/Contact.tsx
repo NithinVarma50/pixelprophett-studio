@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const serviceOptions = [
   { id: "design", label: "Design", basePrice: 300 },
@@ -20,20 +21,21 @@ const serviceOptions = [
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
-    contact: "",
+    email: "",
+    phone: "",
     services: [] as string[],
     budget: "",
     details: "",
   });
 
   const [dynamicBudgetOptions, setDynamicBudgetOptions] = useState<{ value: string; label: string }[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const selectedServices = serviceOptions.filter(s => formData.services.includes(s.id));
     const baseTotal = selectedServices.reduce((sum, service) => sum + service.basePrice, 0);
 
     if (baseTotal === 0) {
-      // Default options if nothing selected (showing generic low range starting from lowest service)
       setDynamicBudgetOptions([
         { value: "300-1000", label: "₹300 – ₹1K" },
         { value: "1000-5000", label: "₹1K – ₹5K" },
@@ -41,11 +43,6 @@ const Contact = () => {
       ]);
       return;
     }
-
-    // Create 3 tiers based on baseTotal
-    // Tier 1: Base to 2x Base
-    // Tier 2: 2x Base to 5x Base
-    // Tier 3: 5x Base +
 
     const tier1End = baseTotal * 2;
     const tier2End = baseTotal * 5;
@@ -79,7 +76,6 @@ const Contact = () => {
         ? prev.services.filter((s) => s !== serviceId)
         : [...prev.services, serviceId];
 
-      // Reset budget when services change as options will change
       return {
         ...prev,
         services: newServices,
@@ -88,30 +84,115 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const validatePhone = (phone: string) => {
+    return /^[+]?[\d\s-]{10,}$/.test(phone.replace(/\s/g, ''));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.name.trim() || !formData.contact.trim() || formData.services.length === 0 || !formData.budget) {
-      toast({ title: "Please fill all required fields", variant: "destructive" });
+    // Validation
+    if (!formData.name.trim()) {
+      toast({ title: "Please enter your name", variant: "destructive" });
+      return;
+    }
+    if (!formData.email.trim() || !validateEmail(formData.email)) {
+      toast({ title: "Please enter a valid email", variant: "destructive" });
+      return;
+    }
+    if (!formData.phone.trim() || !validatePhone(formData.phone)) {
+      toast({ title: "Please enter a valid phone number", variant: "destructive" });
+      return;
+    }
+    if (formData.services.length === 0) {
+      toast({ title: "Please select at least one service", variant: "destructive" });
+      return;
+    }
+    if (!formData.budget) {
+      toast({ title: "Please select a budget range", variant: "destructive" });
       return;
     }
 
-    const servicesText = formData.services
-      .map((s) => serviceOptions.find((opt) => opt.id === s)?.label)
-      .join(", ");
+    setIsSubmitting(true);
 
-    const budgetText = dynamicBudgetOptions.find((b) => b.value === formData.budget)?.label || formData.budget;
+    try {
+      const servicesLabels = formData.services
+        .map((s) => serviceOptions.find((opt) => opt.id === s)?.label)
+        .filter(Boolean) as string[];
 
-    const message = `New Project Inquiry
+      const budgetText = dynamicBudgetOptions.find((b) => b.value === formData.budget)?.label || formData.budget;
+
+      // Save to database
+      const { data: orderData, error: dbError } = await supabase
+        .from('orders')
+        .insert({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+          services: servicesLabels,
+          budget: budgetText,
+          details: formData.details.trim() || null,
+        })
+        .select('id')
+        .single();
+
+      if (dbError) {
+        console.error("Database error:", dbError);
+        throw new Error("Failed to save order");
+      }
+
+      // Send emails via edge function
+      const { error: emailError } = await supabase.functions.invoke('send-order-emails', {
+        body: {
+          orderId: orderData.id,
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+          services: servicesLabels,
+          budget: budgetText,
+          details: formData.details.trim(),
+        },
+      });
+
+      if (emailError) {
+        console.error("Email error:", emailError);
+        // Don't throw - order was saved, just log the email error
+      }
+
+      // Send to WhatsApp
+      const message = `New Project Inquiry
 Name: ${formData.name}
-Contact: ${formData.contact}
-Service: ${servicesText}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Service: ${servicesLabels.join(", ")}
 Budget: ${budgetText}
 Details: ${formData.details || "Not provided"}`;
 
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://api.whatsapp.com/send?phone=919381904726&text=${encodedMessage}`, "_blank");
-    toast({ title: "Redirecting to WhatsApp" });
+      const encodedMessage = encodeURIComponent(message);
+      window.open(`https://api.whatsapp.com/send?phone=919381904726&text=${encodedMessage}`, "_blank");
+      
+      toast({ title: "Order placed successfully! Check your email for confirmation." });
+
+      // Reset form
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        services: [],
+        budget: "",
+        details: "",
+      });
+
+    } catch (error: any) {
+      console.error("Submit error:", error);
+      toast({ title: error.message || "Something went wrong. Please try again.", variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -149,29 +230,45 @@ Details: ${formData.details || "Not provided"}`;
             >
               {/* Name */}
               <div>
-                <label className="block text-sm font-medium mb-3">Name</label>
+                <label className="block text-sm font-medium mb-3">Name *</label>
                 <Input
                   placeholder="Your name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="bg-muted/30 border-border/50 h-12 rounded-xl"
+                  disabled={isSubmitting}
                 />
               </div>
 
-              {/* Contact */}
+              {/* Email */}
               <div>
-                <label className="block text-sm font-medium mb-3">Email or WhatsApp</label>
+                <label className="block text-sm font-medium mb-3">Email *</label>
                 <Input
-                  placeholder="How can we reach you?"
-                  value={formData.contact}
-                  onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+                  type="email"
+                  placeholder="your@email.com"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="bg-muted/30 border-border/50 h-12 rounded-xl"
+                  disabled={isSubmitting}
+                />
+              </div>
+
+              {/* Phone */}
+              <div>
+                <label className="block text-sm font-medium mb-3">Phone / WhatsApp *</label>
+                <Input
+                  type="tel"
+                  placeholder="+91 98765 43210"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="bg-muted/30 border-border/50 h-12 rounded-xl"
+                  disabled={isSubmitting}
                 />
               </div>
 
               {/* Services */}
               <div>
-                <label className="block text-sm font-medium mb-3">Services needed</label>
+                <label className="block text-sm font-medium mb-3">Services needed *</label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {serviceOptions.map((service) => (
                     <label
@@ -184,6 +281,7 @@ Details: ${formData.details || "Not provided"}`;
                       <Checkbox
                         checked={formData.services.includes(service.id)}
                         onCheckedChange={() => handleServiceToggle(service.id)}
+                        disabled={isSubmitting}
                       />
                       <span className="text-sm">{service.label}</span>
                     </label>
@@ -193,7 +291,7 @@ Details: ${formData.details || "Not provided"}`;
 
               {/* Budget */}
               <div>
-                <label className="block text-sm font-medium mb-3">Budget range</label>
+                <label className="block text-sm font-medium mb-3">Budget range *</label>
                 <div className="flex flex-wrap gap-3">
                   {dynamicBudgetOptions.map((option) => (
                     <label
@@ -210,6 +308,7 @@ Details: ${formData.details || "Not provided"}`;
                         checked={formData.budget === option.value}
                         onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
                         className="sr-only"
+                        disabled={isSubmitting}
                       />
                       {option.label}
                     </label>
@@ -228,13 +327,29 @@ Details: ${formData.details || "Not provided"}`;
                   value={formData.details}
                   onChange={(e) => setFormData({ ...formData, details: e.target.value })}
                   className="bg-muted/30 border-border/50 rounded-xl min-h-[120px]"
+                  disabled={isSubmitting}
                 />
               </div>
 
               {/* Submit */}
-              <Button type="submit" variant="hero" size="lg" className="w-full sm:w-auto">
-                <MessageCircle className="w-4 h-4" />
-                Send via WhatsApp
+              <Button 
+                type="submit" 
+                variant="hero" 
+                size="lg" 
+                className="w-full sm:w-auto"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Placing order...
+                  </>
+                ) : (
+                  <>
+                    <MessageCircle className="w-4 h-4" />
+                    Send via WhatsApp
+                  </>
+                )}
               </Button>
             </motion.form>
 
