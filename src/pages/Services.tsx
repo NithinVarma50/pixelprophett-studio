@@ -16,7 +16,6 @@ const webServices = [
 const automationServices = [
   { service: "Single Automation Workflow", price: "₹3,000+" },
   { service: "Email Automation Setup", price: "₹4,000+" },
-  { service: "Full Workflow System", price: "₹10,000+" },
 ];
 
 const scrapingServices = [

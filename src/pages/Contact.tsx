@@ -11,11 +11,11 @@ import { toast } from "@/hooks/use-toast";
 const serviceOptions = [
   // Web
   { id: "single-page", label: "Single Page Portfolio", basePrice: 4000 },
+  { id: "multi-page", label: "Multi-Page Portfolio", basePrice: 5000 },
   { id: "frontend", label: "Frontend Website", basePrice: 6000 },
   { id: "fullstack", label: "Fullstack App", basePrice: 12000 },
   // Automation
   { id: "workflow", label: "Workflow Automation", basePrice: 3000 },
-  { id: "system", label: "Full System", basePrice: 10000 },
   // Data
   { id: "scraping", label: "Data Scraping", basePrice: 1500 },
   // Video & Commercial
