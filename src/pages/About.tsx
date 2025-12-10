@@ -141,7 +141,7 @@ const About = () => {
               <h3 className="font-heading text-xl font-medium mb-2">Saiteja</h3>
               <p className="text-sm text-muted-foreground mb-6">Mobile Editor & Short Form Editor</p>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                Specializes in engaging short-form content and "human" style editing, adding a personal touch to every frame.
+                Specializes in personal branding content, B-rolls, and engaging short-form edits for Instagram.
               </p>
             </motion.div>
 
