@@ -45,7 +45,7 @@ const designServices = [
   { service: "Poster Design", price: "₹500 – ₹1,200" },
   { service: "Social Media Templates", price: "₹500+" },
   { service: "Logo Design", price: "₹200 – ₹1,000" },
-  { service: "Business Card", price: "₹800+" },
+  { service: "Business Card (Design Only)", price: "₹200 – ₹500" },
   { service: "YouTube Thumbnail", price: "₹300+" },
   { service: "Brochure", price: "₹300+" },
 ];
