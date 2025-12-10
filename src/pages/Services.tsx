@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
 const webServices = [
-  { service: "Single Page Portfolio", price: "₹4,000+" },
-  { service: "Multi-Page Portfolio", price: "₹5,000+" },
+  { service: "Single Page Portfolio", price: "₹4,000 – ₹12,000" },
+  { service: "Multi-Page Portfolio", price: "₹5,000 – ₹20,000" },
   { service: "Frontend Website", price: "₹6,000+" },
   { service: "Fullstack Website", price: "₹12,000+" },
   { service: "New Page Addition", price: "₹1,500+" },
@@ -19,13 +19,14 @@ const automationServices = [
 ];
 
 const scrapingServices = [
-  { service: "Data Scraping (per city)", price: "₹1,500+" },
-  { service: "Restaurant data extraction", price: "₹1,500+" },
+  { service: "Data Scraping (per city)", price: "₹1,500 – ₹5,000" },
+  { service: "Google My Business (10 cities)", price: "₹8,000" },
+  { service: "Website Scrape (10 websites)", price: "₹5,000" },
 ];
 
 const videoServices = [
-  { service: "Short Reels (15–30 sec)", price: "₹800+" },
-  { service: "Long-Form Video", price: "₹3,000+" },
+  { service: "Short Reels (15–30 sec)", price: "₹800 – ₹2,000" },
+  { service: "Long-Form Video", price: "₹3,000" },
   { service: "Podcast / Interview", price: "₹4,500+" },
   { service: "Promo Video", price: "₹3,000 – ₹6,000" },
   { service: "Portfolio Intro", price: "₹3,500+" },
@@ -43,7 +44,7 @@ const commercialServices = [
 const designServices = [
   { service: "Poster Design", price: "₹500 – ₹1,200" },
   { service: "Social Media Templates", price: "₹500+" },
-  { service: "Logo Design", price: "₹2,000+" },
+  { service: "Logo Design", price: "₹200 – ₹1,000" },
   { service: "Business Card", price: "₹800+" },
   { service: "YouTube Thumbnail", price: "₹300+" },
   { service: "Brochure", price: "₹1,500+" },
