@@ -7,10 +7,47 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { MessageCircle, Download, ArrowLeft, ShoppingBag } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+<<<<<<< HEAD
 import { serviceCategories, Category } from "@/data/services";
 import { generateBillPDF } from "@/utils/generateBill";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
+=======
+
+const serviceOptions = [
+  // Web Development
+  { id: "single-page", label: "Single Page Portfolio", basePrice: 4000 },
+  { id: "multi-page", label: "Multi-Page Portfolio", basePrice: 5000 },
+  { id: "frontend", label: "Frontend Website", basePrice: 6000 },
+  { id: "fullstack", label: "Fullstack Website", basePrice: 12000 },
+  // Automation
+  { id: "workflow", label: "Automation Workflow", basePrice: 3000 },
+  { id: "email-automation", label: "Email Automation", basePrice: 4000 },
+  // Data Scraping
+  { id: "scraping", label: "Data Scraping", basePrice: 1500 },
+  { id: "gmb-scraping", label: "GMB Scraping (10 cities)", basePrice: 8000 },
+  { id: "website-scraping", label: "Website Scrape (10 sites)", basePrice: 5000 },
+  // Video Editing
+  { id: "reel", label: "Short Reel", basePrice: 800 },
+  { id: "long-video", label: "Long-Form Video", basePrice: 3000 },
+  { id: "podcast", label: "Podcast / Interview", basePrice: 4500 },
+  { id: "promo", label: "Promo Video", basePrice: 3000 },
+  { id: "montage", label: "Montage", basePrice: 1500 },
+  { id: "content", label: "Content Creation", basePrice: 2000 },
+  // Commercial
+  { id: "ad", label: "Ad (Shoot + Edit)", basePrice: 15000 },
+  { id: "trailer", label: "Trailer Cut", basePrice: 4000 },
+  { id: "doc", label: "Documentary", basePrice: 2000 },
+  { id: "after-effects", label: "Advanced After Effects", basePrice: 3000 },
+  // Design
+  { id: "poster", label: "Poster Design", basePrice: 500 },
+  { id: "social-templates", label: "Social Media Templates", basePrice: 500 },
+  { id: "logo", label: "Logo Design", basePrice: 200 },
+  { id: "business-card", label: "Business Card Design", basePrice: 200 },
+  { id: "thumbnail", label: "YouTube Thumbnail", basePrice: 300 },
+  { id: "brochure", label: "Brochure", basePrice: 300 },
+];
+>>>>>>> 82e9b5747647f7d4061a5506120cd3b06b2bf7c8
 
 const Contact = () => {
   const [formData, setFormData] = useState({
