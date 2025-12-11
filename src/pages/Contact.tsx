@@ -5,19 +5,22 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { MessageCircle, Download, ArrowLeft, ShoppingBag } from "lucide-react";
+import { MessageCircle, Download, ArrowLeft, ShoppingBag, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { serviceCategories, Category } from "@/data/services";
 import { generateBillPDF } from "@/utils/generateBill";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
-    contact: "",
+    email: "",
+    phone: "",
     details: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
@@ -56,37 +59,59 @@ const Contact = () => {
 
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.name.trim() || !formData.contact.trim() || selectedServiceIds.length === 0 || !formData.details.trim()) {
+    if (!formData.name.trim() || !formData.phone.trim() || !formData.email.trim() || selectedServiceIds.length === 0 || !formData.details.trim()) {
       toast({ title: "Please fill all fields & project details", variant: "destructive" });
       return;
     }
 
-    // Group selected services by category
-    const servicesByCategory = serviceCategories
-      .map((cat) => {
-        const catServices = cat.services.filter((s) => selectedServiceIds.includes(s.id));
-        return { category: cat.label, services: catServices };
-      })
-      .filter((group) => group.services.length > 0);
+    setIsSubmitting(true);
 
-    // Build formatted services text
-    const servicesText = servicesByCategory
-      .map((group) => {
-        const serviceList = group.services.map((s) => `  • ${s.label}`).join("\n");
-        return `*${group.category}*\n${serviceList}`;
-      })
-      .join("\n\n");
+    try {
+      // Save to database
+      const { error } = await supabase.from("orders").insert({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        services: selectedServiceIds,
+        budget: "Custom Quote",
+        details: formData.details.trim(),
+        status: "pending",
+      });
 
-    const message = `━━━━━━━━━━━━━━━━━━━━
+      if (error) {
+        console.error("Error saving order:", error);
+        toast({ title: "Failed to save order", description: error.message, variant: "destructive" });
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Group selected services by category
+      const servicesByCategory = serviceCategories
+        .map((cat) => {
+          const catServices = cat.services.filter((s) => selectedServiceIds.includes(s.id));
+          return { category: cat.label, services: catServices };
+        })
+        .filter((group) => group.services.length > 0);
+
+      // Build formatted services text
+      const servicesText = servicesByCategory
+        .map((group) => {
+          const serviceList = group.services.map((s) => `  • ${s.label}`).join("\n");
+          return `*${group.category}*\n${serviceList}`;
+        })
+        .join("\n\n");
+
+      const message = `━━━━━━━━━━━━━━━━━━━━
 *🚀 NEW PROJECT INQUIRY*
 ━━━━━━━━━━━━━━━━━━━━
 
 *📋 Client Details*
 Name: ${formData.name}
-Contact: ${formData.contact}
+Email: ${formData.email}
+Phone: ${formData.phone}
 
 *📦 Services Selected*
 ${servicesText}
@@ -96,9 +121,15 @@ ${formData.details}
 
 ━━━━━━━━━━━━━━━━━━━━`;
 
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://api.whatsapp.com/send?phone=919381904726&text=${encodedMessage}`, "_blank");
-    toast({ title: "Redirecting to WhatsApp" });
+      const encodedMessage = encodeURIComponent(message);
+      window.open(`https://api.whatsapp.com/send?phone=919381904726&text=${encodedMessage}`, "_blank");
+      toast({ title: "Order saved & redirecting to WhatsApp" });
+    } catch (err) {
+      console.error("Error:", err);
+      toast({ title: "Something went wrong", variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -125,7 +156,7 @@ ${formData.details}
             <div className="lg:col-span-2 space-y-12">
 
               {/* Personal Details */}
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-3 gap-6">
                 <div>
                   <label className="block text-sm font-medium mb-2">Name *</label>
                   <Input
@@ -136,11 +167,22 @@ ${formData.details}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Contact (Phone/Email) *</label>
+                  <label className="block text-sm font-medium mb-2">Email *</label>
                   <Input
-                    placeholder="Reach out via..."
-                    value={formData.contact}
-                    onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+                    type="email"
+                    placeholder="your@email.com"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="bg-muted/30 h-12 rounded-xl"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Phone *</label>
+                  <Input
+                    type="tel"
+                    placeholder="Your phone number"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="bg-muted/30 h-12 rounded-xl"
                   />
                 </div>
@@ -271,11 +313,15 @@ ${formData.details}
                   )}
 
                   <div className="mt-8 space-y-3">
-                    <Button onClick={handleSubmit} className="w-full" size="lg">
-                      <MessageCircle className="w-4 h-4 mr-2" />
-                      Discuss Quote on WhatsApp
+                    <Button onClick={handleSubmit} className="w-full" size="lg" disabled={isSubmitting}>
+                      {isSubmitting ? (
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      ) : (
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                      )}
+                      {isSubmitting ? "Saving..." : "Discuss Quote on WhatsApp"}
                     </Button>
-                    <Button onClick={handleDownloadPDF} variant="outline" className="w-full" disabled={selectedServices.length === 0}>
+                    <Button onClick={handleDownloadPDF} variant="outline" className="w-full" disabled={selectedServices.length === 0 || isSubmitting}>
                       <Download className="w-4 h-4 mr-2" />
                       Download Project Scope
                     </Button>
@@ -316,10 +362,13 @@ ${formData.details}
                   </p>
 
                   <div className="space-y-3 pt-4">
-                    <Button onClick={handleSubmit} className="w-full" size="lg">
-                      Discuss Quote
+                    <Button onClick={handleSubmit} className="w-full" size="lg" disabled={isSubmitting}>
+                      {isSubmitting ? (
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      ) : null}
+                      {isSubmitting ? "Saving..." : "Discuss Quote"}
                     </Button>
-                    <Button onClick={handleDownloadPDF} variant="outline" className="w-full">
+                    <Button onClick={handleDownloadPDF} variant="outline" className="w-full" disabled={isSubmitting}>
                       Download Scope
                     </Button>
                   </div>
